@@ -4,23 +4,23 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { TabsComponent } from './tabs/tabs.component';
-import { ChatPageComponent } from './chat-page/chat-page.component';
-import { ContactsPageComponent } from './contacts-page/contacts-page.component';
-import { DiscoverPageComponent } from './discover-page/discover-page.component';
-import { MePageComponent } from './me-page/me-page.component';
+import { ChatModule } from './chat/chat.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { DiscoverModule } from './discover/discover.module';
+import { MeModule } from './me/me.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TabsComponent,
-    ChatPageComponent,
-    ContactsPageComponent,
-    DiscoverPageComponent,
-    MePageComponent
+    TabsComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ChatModule,
+    ContactsModule,
+    DiscoverModule,
+    MeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

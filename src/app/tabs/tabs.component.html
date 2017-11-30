@@ -1,19 +1,8 @@
 <div class="tabs">
   <ul class="list">
-    <li class="item">
-      <i class="iconfont icon-chat"></i>
-      <div class="text">Chat</div></li>
-    <li class="item">
-      <i class="iconfont icon-contacts"></i>
-      <div class="text">Contacts</div>
-    </li>
-    <li class="item">
-      <i class="iconfont icon-discover"></i>
-      <div class="text">Discover</div>
-    </li>
-    <li class="item">
-      <i class="iconfont icon-me"></i>
-      <div class="text">Me</div>
+    <li class="item" *ngFor="let item of list; let i=index"  (click)="clickItem(i)">
+      <i class="iconfont" [ngClass]="activeIndex===i?item.activeIconClass:item.iconClass"></i>
+      <div class="text">Chat</div>
     </li>
   </ul>
 </div>
