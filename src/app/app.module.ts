@@ -8,12 +8,14 @@ import { ChatModule } from './chat/chat.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { DiscoverModule } from './discover/discover.module';
 import { MeModule } from './me/me.module';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TabsComponent
+    TabsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

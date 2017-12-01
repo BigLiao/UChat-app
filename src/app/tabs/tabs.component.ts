@@ -7,39 +7,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsComponent implements OnInit {
 
-  private list: Array<any> = [
-    {
-      name: 'Chat',
-      iconClass: 'icon-w-chat',
-      activeIconClass: 'icon-w-chat-a'
-    },
-    {
-      name: 'Contacts',
-      iconClass: 'icon-w-contacts',
-      activeIconClass: 'icon-w-contacts-a'
-    },
-    {
-      name: 'Discover',
-      iconClass: 'icon-w-discover',
-      activeIconClass: 'icon-w-discover-a',
-    },
-    {
-      name: 'Me',
-      iconClass: 'icon-w-me',
-      activeIconClass: 'icon-w-me-a'
-    }
-  ];
+  private list: Array<any> = tabList;
 
   private activeIndex = 0;
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.list);
   }
 
   clickItem(index) {
-    console.log(index);
     this.activeIndex = index;
   }
 
 }
+
+const tabList = [
+  {
+    name: 'Chat',
+    iconClass: 'icon-chat',
+    activeIconClass: 'icon-chat-a'
+  },
+  {
+    name: 'Contacts',
+    iconClass: 'icon-contacts',
+    activeIconClass: 'icon-contacts-a'
+  },
+  {
+    name: 'Discover',
+    iconClass: 'icon-discover',
+    activeIconClass: 'icon-discover-a',
+  },
+  {
+    name: 'Me',
+    iconClass: 'icon-me',
+    activeIconClass: 'icon-me-a'
+  }
+];
