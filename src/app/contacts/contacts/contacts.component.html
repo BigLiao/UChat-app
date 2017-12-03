@@ -1,0 +1,7 @@
+<div class="contacts">
+  <ul class="list">
+    <li class="item" *ngFor="let user of onlineUserList">
+      <app-contacts-item [user]="user"></app-contacts-item>
+    </li>
+  </ul>
+</div>

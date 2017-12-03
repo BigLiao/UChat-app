@@ -1,0 +1,63 @@
+@import '../../../common/style/mixin.styl'
+
+.input-bar
+  width 100%
+  padding 0 0 0 12px
+  box-sizing border-box
+  border-top 1px solid $line-color
+  height auto
+  display flex
+  align-items flex-end
+  background $input-bar-bgcolor
+  color $input-bar-color
+  .input-wrapper
+    flex 1 1 100%
+    height auto
+    padding-bottom 6px
+    margin 12px 8px 8px
+    overflow hidden
+    font-size 0
+    word-break break-all
+    white-space nowrap
+    border-bottom 1px solid $line-color
+    &.active
+      border-bottom 1px solid $icon-color
+    .input
+      display inline-block
+      box-sizing border-box
+      // margin-bottom 8px
+      background transparent
+      border 0
+      padding  0px 8px
+      min-height 20px
+      max-height 80px
+      overflow-x auto
+      overflow-y scroll
+      font-size 16px
+      line-height 20px
+      color #000000
+      word-break break-word
+      white-space normal
+      outline none
+      resize none
+  .btn
+    flex 0 0 auto
+    margin-bottom 8px
+    .iconfont
+      font-size 34px
+  .add-btn
+    padding 0 12px
+  .send-btn
+    padding 0 9px
+    .text
+      padding 0
+      width 40px
+      height 30px
+      line-height 30px
+      text-align center
+      border 1px solid #179e16
+      background #1aad19
+      color #ffffff
+      font-size 12px
+      border-radius 3px
+      outline none

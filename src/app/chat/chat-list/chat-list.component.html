@@ -1,3 +1,8 @@
-<p>
-  chat-list works!
-</p>
+<ul class="chat-list">
+  <li class="item" *ngFor="let item of dialogList">
+    <app-chat-item [dialog]=item></app-chat-item>
+  </li>
+</ul>
+<router-outlet>
+  <app-dialog (sendNewMsg)="sendMsg($event)" [msgList]="currentMsgList"></app-dialog>    
+</router-outlet>

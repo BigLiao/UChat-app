@@ -1,0 +1,11 @@
+<div class="dialog">
+  <div class="top-bar-wrapper">
+      <app-top-bar></app-top-bar>
+  </div>
+  <div class="dialog-box-wrapper">
+      <app-dialog-box [recieveMsg]="msgChange" [msgList]="msgList"></app-dialog-box>      
+  </div>
+  <div class="input-bar-wrapper">
+      <app-input-bar (sendNewMsg)="sendMsg($event)"></app-input-bar>      
+  </div>
+</div>

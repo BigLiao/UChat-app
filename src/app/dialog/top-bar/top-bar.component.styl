@@ -1,0 +1,39 @@
+@import '../../../common/style/mixin.styl'
+
+.top-bar
+  height 48px
+  padding 0 0 0 0
+  background $header-bgcolor
+  color $header-color
+  .title
+    float left
+    line-height 48px
+    font-size 18px
+    font-weight 300
+    padding-left 12px
+  .btn
+    height 48px
+    text-align center
+    font-size 18px
+    font-weight 100
+    &:active
+      background #2e2e32
+    .iconfont
+      font-size 18px
+  .back-btn
+    float left
+    width 48px
+    display flex
+    align-items center
+    .icon-wrapper
+      display inline-block
+      width 100%
+      box-sizing border-box
+      border-right 1px solid #2e2e32
+  .man-btn
+    float right
+    line-height 48px
+    padding 0 10px
+    .iconfont
+      font-size 24px
+  

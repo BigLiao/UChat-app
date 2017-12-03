@@ -1,0 +1,11 @@
+<div class="input-bar">
+  <div class="vioce-btn btn"><i class="iconfont icon-vioce"></i></div>
+  <div class="input-wrapper" [class.active]="focus">
+    <textarea (blur)="inputBlur()" (focus)="inputFocus()" #area rows="1" [style.height.px]="inputHeight" (ngModelChange)="ipnut(area, $event)" cols="20" class="input" type="text" name="input" [(ngModel)]="inputText"></textarea>
+  </div>
+  <div class="face-btn btn"><i class="iconfont icon-face"></i></div>
+  <div class="add-btn btn" [hidden]="buttonShow"><i class="iconfont icon-add1"></i></div>
+  <div class="send-btn btn" [hidden]="!buttonShow">
+    <button type="button" class="text" (click)="sendMsg()">Send</button>
+  </div>
+</div>

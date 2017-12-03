@@ -1,6 +1,32 @@
-border-1px()
-  border-bottom 1px solid
-  @media only screen and (-webkit-min-device-pixel-ratio:2), only screen and (device-pixel-ratio:2)
-    transform scaleY(0.5)
-  @media only screen and (-webkit-min-device-pixel-ratio:3), only screen and (device-pixel-ratio:3)
-    transform scaleY(1/3)
+$icon-color = #46c01b
+$bgcolor = #999999
+$item-bgcolor = #ffffff
+$line-color = #d9d9d9
+$name-color = #353535
+$chat-bgcolor = #ebebeb
+$dialog-bgcolor = #a0e75a
+$header-bgcolor = #393a3f
+$header-color = #ffffff
+$input-bar-bgcolor = #f4f4f4
+$input-bar-color = #6f7378
+$text-color = #353535
+
+border-1px($color)
+  position: relative
+  &::after
+    position: absolute
+    display: block
+    left: 0
+    bottom: 0
+    width: 100%
+    border-bottom: 1px solid $color
+    content: ' '
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-radio: 1.5)
+      -webkit-transform: scaleY(0.7)
+      transform: scaleY(0.7)
+    @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-radio: 2)
+      -webkit-transform: scaleY(0.5)
+      transform: scaleY(0.5)
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-radio: 3)
+      -webkit-transform: scaleY(0.3)
+      transform: scaleY(0.3)

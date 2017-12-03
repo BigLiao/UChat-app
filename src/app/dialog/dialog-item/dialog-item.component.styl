@@ -1,0 +1,57 @@
+@import '../../../common/style/mixin.styl'
+
+.dialog-item
+  position relative
+  width 100%
+  overflow auto
+  .avatar
+    // float left
+    width 40px
+    height 40px
+    background #2aa346
+  .content
+    position relative
+    // float left
+    // margin-left 10px
+    .text
+      white-space pre-line
+      max-width 220px
+      padding 12px
+      font-size 16px
+      line-height 22px
+      // background #ffffff
+      border-radius 4px
+      color $text-color 
+    .sharp
+      position absolute
+      // left -10px
+      top 15px
+      width 0
+      height 0
+      border 5px solid #ffffff
+      border-top-color transparent
+      border-bottom-color transparent
+  &.left
+    .avatar
+      float left
+    .content
+      float left
+      margin-left 10px
+      .text
+        background #ffffff        
+      .sharp
+        left -10px
+        border-right-color #ffffff            
+        border-left-color transparent      
+  &.right
+    .avatar
+      float right
+    .content
+      float right
+      margin-right 10px
+      .text
+        background $dialog-bgcolor      
+      .sharp
+        right -10px
+        border-left-color $dialog-bgcolor      
+        border-right-color transparent      
