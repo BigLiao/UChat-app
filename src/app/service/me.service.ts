@@ -1,22 +1,43 @@
 import { Injectable } from '@angular/core';
 
+const STORE_NAME = 'uchatuserinfo'
+
 @Injectable()
 export class MeService {
 
   public me: User;
 
   constructor() {
-    this.initMe('liao', '')
+    if (this.hasMe()) {
+      this.getMe()
+    }
   }
 
   initMe(name:string, avatar:string) {
-    let id = 'test1@' + getDate() + randomStr(4)
-    this.me = new User(id, name, avatar)
+    let id = 'test@' + getDate() + randomStr(4);
+    this.me = new User(id, name, avatar);
+    this.storeMe();    
+    return this.me;
+  }
+
+  storeMe() {
+    localStorage.setItem(STORE_NAME, JSON.stringify(this.me))
+  }
+
+  hasMe() {
+    return !!localStorage.getItem(STORE_NAME)
+  }
+
+  getMe() {
+    let localMe = JSON.parse(localStorage.getItem(STORE_NAME));
+    this.me = localMe
     console.log(this.me)
   }
 
-  setName(name) {
-    this.me.name = name;
+  updateMe(name:string, avatar:string) {
+    const oldId = this.me.id;
+    this.me = new User(oldId, name, avatar);
+    this.storeMe()
   }
 
 }
@@ -45,12 +66,12 @@ function randomStr(n: number) {
 }
 
 export class User {
-  // public id: string;
-  // public name: string;
-  // public avatar: string;
-  constructor(public id:string, public name:string, public avatar:string) {
-    // this.id = id;
-    // this.name = name;
-    // this.avatar = avatar
+  public id: string;
+  public name: string;
+  public avatar: string;
+  constructor(id, name, avatar) {
+    this.id = id;
+    this.name = name;
+    this.avatar = avatar
   }
 }

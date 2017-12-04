@@ -9,13 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class DialogComponent implements OnInit {
 
-  @Input()
-  public msgList: Msg[];
+  public msgList: Msg[] = [];
 
   public msgChange: Observable<string>
-
-  @Output()
-  public sendNewMsg: EventEmitter<string> = new EventEmitter()
 
   constructor(private store: StoreService) { 
     this.msgChange = this.store.msgChange;
@@ -27,7 +23,7 @@ export class DialogComponent implements OnInit {
   }
 
   sendMsg(msg: string) {
-    this.sendNewMsg.emit(msg);
+    this.store.sendMsg(msg);
   }
 
 }

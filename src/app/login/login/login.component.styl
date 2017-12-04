@@ -1,0 +1,47 @@
+@import '../../../common/style/mixin'
+
+.login
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background #ffffff
+  .avatar
+    margin 100px auto 0
+    width 60px
+    height 60px
+    background #994499
+  .username
+    margin 40px 0 0
+    text-align center
+    .input
+      border 0
+      border-bottom 1px solid $line-color
+      outline none
+      font-size 18px
+      padding 5px 10px
+      width 200px
+      &:focus
+        border-bottom-color $icon-color
+  .info
+    margin 5px auto 0
+    width 220px
+    height 20px
+    font-size 12px
+    color $info-color
+  .button
+    margin 30px auto
+    text-align center
+    .btn
+      display inline-block
+      width 160px
+      height 36px
+      font-size 18px
+      line-height 36px
+      background $btn-bgcolor
+      color #ffffff
+      outline none
+      border 0
+      border-radius 5px
+

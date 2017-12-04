@@ -11,6 +11,9 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { StoreService } from './service/store.service';
 import { MeService } from './service/me.service';
+import { LoginModule } from './login/login.module';
+import { LoginGuard } from './login/login-guard.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -22,13 +25,15 @@ import { MeService } from './service/me.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ChatModule,
     ContactsModule,
     DiscoverModule,
     MeModule,
+    LoginModule,
     AppRoutingModule
   ],
-  providers: [StoreService, MeService],
+  providers: [StoreService, MeService, LoginGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

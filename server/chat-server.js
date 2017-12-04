@@ -22,8 +22,9 @@ io.on('connection', function (socket) {
     }
     var id = user.id;
     onlineUserSet[socketId] = new onlineUser(id, user, socket)
+    socket.emit('login success', true)
     socket.broadcast.emit('user join', geneList())
-    socket.emit('user join', geneList())
+    socket.emit('userlist change', geneList())
     addedUser = true;
     console.log('add user')
     console.log(JSON.stringify(user))
@@ -43,6 +44,10 @@ io.on('connection', function (socket) {
     console.log('msg')
     console.log(JSON.stringify(msg))
     socket.emit('msg', msg)
+  })
+  socket.on('update user', function (user) {
+    this.onlineUserSet[socketId].user = user;
+    socket.emit('userlist change', geneList())
   })
   socket.on('disconnect', function () {
     if (onlineUserSet[socketId]) {

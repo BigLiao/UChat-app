@@ -13,28 +13,38 @@ export class StoreService {
   public msgStore: any = {};
   private socket: io.Socket;
   public me: User
+  public hasLogin: boolean = false;
 
   constructor(private meService: MeService) {
+  }
+
+  login(): Observable<boolean> {
     this.me = this.meService.me;
     this.socket = io(URL);
-    this.socket.emit('add user', this.me)  
-    this.socket.on('user join', (userList:User[]) => {
+    this.socket.emit('add user', this.me) 
+    this.socket.on('userlist change', (userList:User[]) => {
       this.userList = userList
     })
     this.socket.on('msg', (msg:Msg) => {
       let fromId = msg.from;
       if (this.msgStore[fromId]) {
-        this.msgStore[fromId].push(msg)        
+        this.msgStore[fromId].push(msg)       
       } else {
         this.msgStore[fromId] = [msg]
       }
       this.msgChange.emit('new msg')
     })
+    return Observable.fromEvent(this.socket, 'login success')
   }
 
   sendMsg(msg: string) {
     var msgObj = new Msg(this.me.id, '123214', msg, 12312321);
     this.socket.emit('msg', msgObj)
+  }
+
+  updateMe() {
+    this.me = this.meService.me;      
+    this.socket.emit('update user', this.me);
   }
 
 }
