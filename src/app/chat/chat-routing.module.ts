@@ -4,7 +4,7 @@ import { DialogComponent } from '../dialog/dialog/dialog.component';
 
 const routes: Routes = [
   {path: 'dialog', component: DialogComponent}
-]
+];
 
 @NgModule({
   imports: [
