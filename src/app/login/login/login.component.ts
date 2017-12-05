@@ -26,18 +26,15 @@ export class LoginComponent implements OnInit {
       this.info = '请输入4个以上字符';
       return;
     }
-    if (this.me.hasMe()) {
-      this.me.updateMe(this.name, '');
-      this.loginService.update();
-    } else {
-      this.me.initMe(this.name, '');
-      this.loginService.login();
-    }
-    if (this.loginService.redirectUrl) {
-      this.router.navigate([this.loginService.redirectUrl]);
-    } else {
-      this.router.navigate(['/index']);
-    }
+    // if (this.me.hasMe()) {
+    //   this.me.updateMe(this.name, '');
+    //   this.loginService.update();
+    // } else {
+    //   this.me.initMe(this.name, '');
+    //   this.loginService.login();
+    // }
+    this.me.initMe(this.name, '');
+    this.loginService.login();
   }
 
 }

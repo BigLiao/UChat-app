@@ -11,12 +11,7 @@ import { LoginService } from '../service/login.service';
 export class LoginGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
     
-    // if (this.loginService.isLoggedIn) {
-    //   return true;
-    // }
-
-    if (this.me.hasMe()) {
-      this.loginService.login();
+    if (this.loginService.isLoggedIn) {
       return true;
     } else {
       const url = state.url;
@@ -24,6 +19,16 @@ export class LoginGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
+
+    // if (this.me.hasMe()) {
+    //   this.loginService.login();
+    //   return true;
+    // } else {
+    //   const url = state.url;
+    //   this.loginService.redirectUrl = url;
+    //   this.router.navigate(['/login']);
+    //   return false;
+    // }
 
     // if (this.me.hasMe()) {
     //   this.me.getMe();

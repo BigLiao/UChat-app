@@ -1,7 +1,7 @@
 <div class="tabs">
   <ul class="list">
-    <li class="item" *ngFor="let item of list; let i=index"  (click)="clickItem(i,item)" [class.active]="activeIndex===i">
-      <i class="iconfont" [ngClass]="activeIndex===i?item.activeIconClass:item.iconClass"></i>
+    <li [routerLink]="item.url" routerLinkActive="active" #link="routerLinkActive" class="item" *ngFor="let item of list; let i=index">
+      <i class="iconfont" [ngClass]="link.isActive?item.activeIconClass:item.iconClass"></i>
       <div class="text">{{item.name}}</div>
     </li>
   </ul>

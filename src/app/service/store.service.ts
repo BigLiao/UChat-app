@@ -22,7 +22,7 @@ export class StoreService {
     this.socket.on('userlist change', (userList: User[]) => {
       this.userList = decode(userList);
       this.userListChange.emit(true);
-      console.log(userList);
+      console.log(this.userList);
     });
 
     this.socket.on('msg', (msg: string) => {
@@ -39,11 +39,12 @@ export class StoreService {
     this.socket.on('disconnect', (reason) => {
       console.log('disconnect: ' + reason);
     });
+
+    console.log(encode({'ijd':'你好'}))
   }
 
   login(): Observable<boolean> {
     this.me = this.meService.me;
-    console.log(this.me);
     this.socket.emit('add user', encode(this.me));
     return Observable.fromEvent(this.socket, 'login');
   }
@@ -73,9 +74,9 @@ export class Msg {
 }
 
 function encode (obj) {
-  return escape(JSON.stringify(obj));
+  return encodeURI(JSON.stringify(obj));
 }
 
 function decode (str) {
-  return JSON.parse(unescape(str));
+  return JSON.parse(decodeURI(str));
 }

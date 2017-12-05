@@ -29,24 +29,24 @@ const tabList = [
     name: 'Chat',
     iconClass: 'icon-chat',
     activeIconClass: 'icon-chat-a',
-    url: 'index'
+    url: '/index'
   },
   {
     name: 'Contacts',
     iconClass: 'icon-contacts',
     activeIconClass: 'icon-contacts-a',
-    url: 'contacts'
+    url: '/contacts'
   },
   {
     name: 'Discover',
     iconClass: 'icon-discover',
     activeIconClass: 'icon-discover-a',
-    url: 'discover'
+    url: '/discover'
   },
   {
     name: 'Me',
     iconClass: 'icon-me',
     activeIconClass: 'icon-me-a',
-    url: 'me'
+    url: '/me'
   }
 ];

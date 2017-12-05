@@ -16,8 +16,4 @@ export class ContactsItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  clickItem(item) {
-    console.log(item)
-  }
-
 }

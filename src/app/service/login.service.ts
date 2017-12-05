@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StoreService } from './store.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -11,6 +12,7 @@ export class LoginService {
   login() {
     return this.store.login().subscribe(() => {
       this.isLoggedIn = true;
+      this.router.navigateByUrl(this.redirectUrl);
     });
   }
 
@@ -18,6 +20,6 @@ export class LoginService {
     this.store.updateMe();
   }
 
-  constructor(private store: StoreService) {}
+  constructor(private store: StoreService, private router: Router) {}
 
 }

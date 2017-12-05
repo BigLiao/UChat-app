@@ -25,7 +25,7 @@ const routes: Routes = [
         component: ChatListComponent,
       },
       {
-        path: 'dialog',
+        path: 'dialog/:id',
         component: DialogComponent
       },
       {

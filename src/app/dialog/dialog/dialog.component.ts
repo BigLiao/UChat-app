@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Input, ElementRef, ViewChild } from '@angular/core';
 import { StoreService, Msg } from '../../service/store.service';
 import { Observable } from 'rxjs';
+import { Route, ActivatedRoute } from '@angular/router';
+import { User } from '../../service/me.service';
 
 @Component({
   selector: 'app-dialog',
@@ -13,13 +15,17 @@ export class DialogComponent implements OnInit {
 
   public msgChange: Observable<string>
 
-  constructor(private store: StoreService) { 
-    this.msgChange = this.store.msgChange;
+  constructor(private store: StoreService, private route: ActivatedRoute) { 
   }
 
+  user: User;
+
+  contactId: string;
+
   ngOnInit() {
-    console.log('dialog');
-    console.log(this.msgList);
+    this.msgChange = this.store.msgChange;
+    this.contactId = this.route.snapshot.paramMap.get('id');
+    this.store.userList.fi
   }
 
   sendMsg(msg: string) {
