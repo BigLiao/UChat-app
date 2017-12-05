@@ -13,54 +13,54 @@ export class MeService {
     }
   }
 
-  initMe(name:string, avatar:string) {
-    let id = 'test@' + getDate() + randomStr(4);
+  initMe(name: string, avatar: string) {
+    const id = 'test@' + getDate() + randomStr(4);
     this.me = new User(id, name, avatar);
-    this.storeMe();    
+    this.storeMe();
     return this.me;
   }
 
   storeMe() {
-    localStorage.setItem(STORE_NAME, JSON.stringify(this.me))
+    localStorage.setItem(STORE_NAME, JSON.stringify(this.me));
   }
 
   hasMe() {
-    return !!localStorage.getItem(STORE_NAME)
+    return !!localStorage.getItem(STORE_NAME);
   }
 
   getMe() {
-    let localMe = JSON.parse(localStorage.getItem(STORE_NAME));
-    this.me = localMe
-    console.log(this.me)
+    const localMe = JSON.parse(localStorage.getItem(STORE_NAME));
+    this.me = localMe;
+    console.log(this.me);
   }
 
-  updateMe(name:string, avatar:string) {
+  updateMe(name: string, avatar: string) {
     const oldId = this.me.id;
     this.me = new User(oldId, name, avatar);
-    this.storeMe()
+    this.storeMe();
   }
 
 }
 
 function format(num) {
-  return num < 10 ? '0' + num : '' + num
+  return num < 10 ? '0' + num : '' + num;
 }
 
 function getDate() {
-  let date = new Date();
-  let year = format(date.getFullYear());
-  let month = format(date.getMonth() + 1);
-  let day = format(date.getDate());
-  let hour = format(date.getHours());
-  let min = format(date.getMinutes());
-  return year + month + day + hour + min
+  const date = new Date();
+  const year = format(date.getFullYear());
+  const month = format(date.getMonth() + 1);
+  const day = format(date.getDate());
+  const hour = format(date.getHours());
+  const min = format(date.getMinutes());
+  return year + month + day + hour + min;
 }
 
 function randomStr(n: number) {
   let str = '';
-  while(n > 0) {
+  while (n > 0) {
     str += Math.floor(Math.random() * 10);
-    n--
+    n--;
   }
   return str;
 }

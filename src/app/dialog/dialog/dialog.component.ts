@@ -18,8 +18,8 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('dialog')
-    console.log(this.msgList)
+    console.log('dialog');
+    console.log(this.msgList);
   }
 
   sendMsg(msg: string) {

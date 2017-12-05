@@ -22,7 +22,13 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('contacts');
     this.onlineUserList = this.store.userList;
+    this.store.userListChange.subscribe(e => {
+      this.onlineUserList = this.store.userList;
+      console.log(this.store.userList);
+    });
+    console.log(this.store.userList);
   }
 
 }

@@ -4,6 +4,7 @@ var io = require('socket.io')(app);
 app.listen(8000);
 
 var onlineUserSet = {};
+var onlineUserList = [{ "id": "adming", "name": "我", "avatar": "" }];
 onlineUserSet['adming123'] = {
   id: 'adming',
   user: {
@@ -16,23 +17,28 @@ onlineUserSet['adming123'] = {
 io.on('connection', function (socket) {
   var addedUser = false;
   var socketId = socket.id;
+
+  // socket.emit('userlist change', geneList());
+
+  // 新用户加入
   socket.on('add user', function(user) {
     if (addedUser) {
       return;
     }
     var id = user.id;
     onlineUserSet[socketId] = new onlineUser(id, user, socket)
-    socket.emit('login success', true)
-    socket.broadcast.emit('user join', geneList())
-    socket.emit('userlist change', geneList())
+    // geneList()
+    socket.emit('login', true)
+    console.log('add user: ' + user)
+    socket.emit('userlist change', encode(onlineUserList))
+    console.log('userlist change: ' + encode(onlineUserList))
     addedUser = true;
-    console.log('add user')
-    console.log(JSON.stringify(user))
   })
   // socket.on('msg', function (msg) {
   //   var toId = msg.toUser.id;
   //   for (var i in onlineUserSet) {
   //     if (onlineUserSet[i].id === toId) {
+
   //       onlineUserSet[i].socket.receiveMsg(msg)
   //       return;
   //     }
@@ -41,19 +47,26 @@ io.on('connection', function (socket) {
   //   socket.emit('not fount', msg)
   // });
   socket.on('msg', function (msg) {
-    console.log('msg')
+    msg = decode(msg);
+    console.log('msg');
     console.log(JSON.stringify(msg))
-    socket.emit('msg', msg)
+    socket.emit('msg', encode(msg))
   })
   socket.on('update user', function (user) {
+    user = decode(user);
     this.onlineUserSet[socketId].user = user;
-    socket.emit('userlist change', geneList())
+    // socket.emit('userlist change', geneList())
   })
   socket.on('disconnect', function () {
     if (onlineUserSet[socketId]) {
       delete onlineUserSet[socketId];
-      socket.broadcast.emit('user leave', geneList())
+      console.log('user leave');
+      // console.log(JSON.stringify(geneList()))
+      socket.broadcast.emit('user leave', encode(onlineUserList))
     }
+  })
+  socket.on('error', function (e) {
+    console.log(e)
   })
 });
 
@@ -72,5 +85,14 @@ function geneList () {
   for (var i in onlineUserSet) {
     list.push(onlineUserSet[i].user)
   }
-  return list
+  onlineUserList = list;
 }
+
+function encode(obj) {
+  return escape(JSON.stringify(obj));
+}
+
+function decode(str) {
+  return JSON.parse(unescape(str));
+}
+

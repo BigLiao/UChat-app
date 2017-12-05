@@ -14,6 +14,8 @@ import { MeService } from './service/me.service';
 import { LoginModule } from './login/login.module';
 import { LoginGuard } from './login/login-guard.service';
 import { FormsModule } from '@angular/forms';
+import { MainComponent } from './main/main.component';
+import { LoginService } from './service/login.service';
 
 
 
@@ -21,7 +23,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     TabsComponent,
-    HeaderComponent
+    HeaderComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import { FormsModule } from '@angular/forms';
     LoginModule,
     AppRoutingModule
   ],
-  providers: [StoreService, MeService, LoginGuard],
+  providers: [StoreService, MeService, LoginGuard, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

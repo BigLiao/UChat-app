@@ -35,7 +35,7 @@ const tabList = [
     name: 'Contacts',
     iconClass: 'icon-contacts',
     activeIconClass: 'icon-contacts-a',
-    url: 'contacts'    
+    url: 'contacts'
   },
   {
     name: 'Discover',

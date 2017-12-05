@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatListComponent } from './chat/chat-list/chat-list.component'
+import { ChatListComponent } from './chat/chat-list/chat-list.component';
 import { ContactsComponent } from './contacts/contacts/contacts.component';
-import { DiscoverComponent } from './discover/discover/discover.component'
+import { DiscoverComponent } from './discover/discover/discover.component';
 import { MeComponent } from './me/me/me.component';
 import { DialogComponent } from './dialog/dialog/dialog.component';
 import { LoginComponent } from './login/login/login.component';
 import { LoginGuard } from './login/login-guard.service';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
   {
@@ -15,29 +16,33 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'index',
-    canActivate: [LoginGuard],
-    component: ChatListComponent,
-  },
-  {
-    path: 'dialog',
-    component: DialogComponent
-  },
-  {
-    path: 'contacts',
-    canActivate: [LoginGuard],    
-    component: ContactsComponent
-  }, {
-    path: 'discover',
-    canActivate: [LoginGuard],    
-    component: DiscoverComponent
-  }, {
-    path: 'me',
-    canActivate: [LoginGuard],    
-    component: MeComponent
-  }, {
     path: '',
-    redirectTo: 'index',
+    canActivate: [LoginGuard],
+    component: MainComponent,
+    children: [
+      {
+        path: 'index',
+        component: ChatListComponent,
+      },
+      {
+        path: 'dialog',
+        component: DialogComponent
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent
+      }, {
+        path: 'discover',
+        component: DiscoverComponent
+      }, {
+        path: 'me',
+        component: MeComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'main/index',
     pathMatch: 'full'
   }
 ]
