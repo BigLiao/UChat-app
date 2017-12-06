@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MeService, User } from './me.service';
 import { escape, unescape } from 'querystring';
 
-const URL = 'ws://192.168.0.131:8000';
+const URL = 'ws://uchat.bigleo.me:8080';
 
 @Injectable()
 export class StoreService {

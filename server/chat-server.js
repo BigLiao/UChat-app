@@ -3,7 +3,7 @@ var app = require('http').createServer()
 var io = require('socket.io')(app);
 var robot = require('./robot')
 
-app.listen(8000);
+app.listen(8081);
 
 var onlineUserSet = {};
 onlineUserSet['admin'] = {
@@ -32,7 +32,6 @@ io.on('connection', function (socket) {
     socket.emit('login success', true)
     console.log('add user: ' + userObj.name)
     socket.broadcast.emit('add user', user)
-    console.log('userlist change: ' + encode(geneList()))
     addedUser = true;
   })
   socket.on('msg', function (msg) {
@@ -64,7 +63,6 @@ io.on('connection', function (socket) {
   // })
   socket.on('update user', function (user) {
     var userObj = decode(user);
-    console.log(user);
     this.onlineUserSet[socketId].user = userObj;
     // socket.emit('userlist change', geneList())
   })
@@ -72,7 +70,6 @@ io.on('connection', function (socket) {
     if (onlineUserSet[socketId]) {
       var user = onlineUserSet[socketId].user;
       delete onlineUserSet[socketId];
-      console.log('user leave');
       socket.broadcast.emit('user leave', encode(user));
     }
   })
@@ -91,7 +88,6 @@ function adminReturn(msgObj, socket) {
       msg: returnText,
       time: (new Date()).getTime()
     }
-    console.log(returnMsg);
     socket.emit('msg', encode(returnMsg));
   })
 
@@ -123,4 +119,3 @@ function decode (str) {
   return JSON.parse(decodeURI(str));
 }
 
-// function 
