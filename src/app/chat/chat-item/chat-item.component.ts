@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { User } from '../../service/me.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-item',
@@ -12,17 +13,21 @@ export class ChatItemComponent implements OnInit {
   @Input()
   public dialog: Dialog;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  clickItem() {
+    this.router.navigate(['/dialog/' + this.dialog.user.id]);
   }
 
 }
 
 export class Dialog {
-  user: User
-  msg: string
-  time: string
+  user: User;
+  msg: string;
+  time: string;
 }
 
 const auser = {

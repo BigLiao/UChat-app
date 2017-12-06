@@ -1,5 +1,5 @@
-<div class="chat-item">
-  <div class="avatar">
+<div class="chat-item" (click)="clickItem()">
+  <div class="avatar" [style.background]="dialog.user.avatar">
     <img [src]="dialog.user.avatar" alt="">
   </div>
   <div class="box">

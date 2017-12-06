@@ -1,15 +1,17 @@
+var http = require('http');
 var app = require('http').createServer()
 var io = require('socket.io')(app);
+var robot = require('./robot')
 
 app.listen(8000);
 
 var onlineUserSet = {};
 onlineUserSet['admin'] = {
-  id: 'adming',
+  id: 'admin',
   user: {
-    id: 'adming',
-    name: '管理员',
-    avatar: ''
+    id: 'admin',
+    name: '人工智能',
+    avatar: '#121212'
   }
 }
 
@@ -17,25 +19,26 @@ io.on('connection', function (socket) {
   var addedUser = false;
   var socketId = socket.id;
 
-  socket.emit('userlist change', encode(geneList()));
+  socket.emit('init userList', encode(geneList()));
 
   // 新用户加入
-  socket.on('add user', function(user) {
+  socket.on('login', function(user) {
     var userObj = decode(user);
     if (addedUser) {
       return;
     }
     var id = userObj.id;
     onlineUserSet[socketId] = new onlineUser(id, userObj, socket)
-    socket.emit('login', true)
+    socket.emit('login success', true)
     console.log('add user: ' + userObj.name)
-    socket.broadcast.emit('userlist change', encode(geneList()))
+    socket.broadcast.emit('add user', user)
     console.log('userlist change: ' + encode(geneList()))
     addedUser = true;
   })
   socket.on('msg', function (msg) {
+    socket.emit('msg', msg)
     var msgObj = decode(msg);
-    var toId = msgObj.toUser.id;
+    var toId = msgObj.to;
     if (toId === 'admin') {
       adminReturn(msgObj, socket);
       return;
@@ -46,10 +49,14 @@ io.on('connection', function (socket) {
         return;
       }
     }
-    socket.emit('msg', msg)
     // if no user
     socket.emit('not fount', msg)
   });
+
+  socket.on('get userList', function () {
+    socket.emit('init userList', encode(geneList()));
+  })
+
   // socket.on('msg', function (msg) {
   //   msg = decode(msg);
   //   console.log('msg');
@@ -63,10 +70,10 @@ io.on('connection', function (socket) {
   })
   socket.on('disconnect', function () {
     if (onlineUserSet[socketId]) {
+      var user = onlineUserSet[socketId].user;
       delete onlineUserSet[socketId];
       console.log('user leave');
-      // console.log(JSON.stringify(geneList()))
-      socket.broadcast.emit('user leave', encode(geneList()));
+      socket.broadcast.emit('user leave', encode(user));
     }
   })
   socket.on('error', function (e) {
@@ -75,12 +82,19 @@ io.on('connection', function (socket) {
 });
 
 function adminReturn(msgObj, socket) {
-  var returnMsg = {
-    from: 'admin',
-    to: msgObj.from,
-    msg: 'You send: ' + msgObj.msg,
-    time: (new Date()).getTime()
-  }
+  var msg = msgObj.msg;
+  robot(msgObj.from, msg).then(data => {
+    var returnText = data.text;
+    var returnMsg = {
+      from: 'admin',
+      to: msgObj.from,
+      msg: returnText,
+      time: (new Date()).getTime()
+    }
+    console.log(returnMsg);
+    socket.emit('msg', encode(returnMsg));
+  })
+
 }
 
 
@@ -108,3 +122,5 @@ function encode (obj) {
 function decode (str) {
   return JSON.parse(decodeURI(str));
 }
+
+// function 

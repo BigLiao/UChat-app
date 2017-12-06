@@ -8,13 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DialogItemComponent implements OnInit {
 
   @Input()
-  public text: string = 'test';
-  
-  @Input()
-  public avatar: string = '';
+  public text: string;
 
   @Input()
-  public isLeft: boolean = true;
+  public avatar: string;
+
+  @Input()
+  public isLeft = true;
 
   constructor() { }
 

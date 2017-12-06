@@ -2,7 +2,7 @@
   <div class="container" #container>
     <ul #scroll>
       <li class="item" *ngFor="let item of msgList">
-          <app-dialog-item [isLeft]="item.from===me.id" [text]="item.msg"></app-dialog-item>        
+          <app-dialog-item [isLeft]="!(item.from===me.id)" [text]="item.msg" [avatar]="item.from===me.id?me.avatar:user.avatar"></app-dialog-item>        
       </li>
     </ul>
   </div>

@@ -4,59 +4,93 @@ import { Observable } from 'rxjs';
 import { MeService, User } from './me.service';
 import { escape, unescape } from 'querystring';
 
-const URL = 'ws://localhost:8000';
+const URL = 'ws://192.168.0.131:8000';
 
 @Injectable()
 export class StoreService {
 
-  public userList: User[];
-  public userListChange: EventEmitter<any> = new EventEmitter();
-  public msgChange: EventEmitter<any> = new EventEmitter();
-  public msgStore: any = {};
   private socket: io.Socket;
+
+  // 储存数据
+  public userList: User[];
+  public msgStore: any = {};
   public me: User;
+
+  // 获取数据的接口
+  public userListChange: EventEmitter<User[]> = new EventEmitter();
+  public msgStoreChange: EventEmitter<any> = new EventEmitter();
+  public currentMsgList: EventEmitter<Msg[]> = new EventEmitter();
 
   constructor(private meService: MeService) {
     this.socket = io(URL);
 
-    this.socket.on('userlist change', (userList: User[]) => {
+    this.socket.on('init userList', (userList: User[]) => {
       this.userList = decode(userList);
-      this.userListChange.emit(true);
+      this.userListChange.emit(this.userList);
       console.log(this.userList);
+    });
+
+    this.socket.on('add user', (newUser: string) => {
+      const userObj = decode(newUser);
+      this.userList.push(userObj);
+      this.userListChange.emit(this.userList);
     });
 
     this.socket.on('msg', (msg: string) => {
       const msgObj = decode(msg);
-      const fromId = msgObj.from;
+      console.log(msgObj);
+      let fromId = msgObj.from;
+      if (fromId === this.me.id) {
+        fromId = msgObj.to;
+      }
       if (this.msgStore[fromId]) {
         this.msgStore[fromId].push(msgObj);
       } else {
         this.msgStore[fromId] = [msgObj];
       }
-      this.msgChange.emit('new msg');
+      this.msgStoreChange.emit(this.msgStore);
     });
 
     this.socket.on('disconnect', (reason) => {
       console.log('disconnect: ' + reason);
     });
 
-    console.log(encode({'ijd':'你好'}))
+    this.socket.on('user leave', (user: string) => {
+      const userObj = decode(user);
+      for (let i = 0; i < this.userList.length; i++) {
+        if (this.userList[i].id === userObj.id) {
+          this.userList.splice(i, 1);
+          break;
+        }
+      }
+    })
+
   }
 
   login(): Observable<boolean> {
     this.me = this.meService.me;
-    this.socket.emit('add user', encode(this.me));
-    return Observable.fromEvent(this.socket, 'login');
+    this.socket.emit('login', encode(this.me));
+    return Observable.fromEvent(this.socket, 'login success');
   }
 
-  sendMsg(msg: string) {
-    const msgObj = new Msg(this.me.id, '123214', msg, 12312321);
+  sendMsg(msg: string, to: string) {
+    const msgObj = new Msg(this.me.id, to, msg, 12312321);
     this.socket.emit('msg', encode(msgObj));
   }
 
   updateMe() {
     this.me = this.meService.me;
     this.socket.emit('update user', this.me);
+  }
+
+  getUserList() {
+    this.socket.emit('get userList');
+  }
+
+  getUser(id: string): User {
+    return this.userList.find(user => {
+      return user.id === id;
+    });
   }
 }
 

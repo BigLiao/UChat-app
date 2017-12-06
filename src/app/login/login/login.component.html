@@ -1,5 +1,5 @@
-<div class="login">
-  <div class="avatar">
+<div class="login" (click)="hideList()">
+  <div class="avatar" (click)="toogleShow($event)" [style.background]="avatar">
     <img src="" alt="">
   </div>
   <div class="username">
@@ -8,5 +8,10 @@
   <div class="info">{{info}}</div>  
   <div class="button">
     <button class="btn" type="button" (click)="submit()">登录</button>
+  </div>
+  <div class="avatar-list" *ngIf="showList">
+    <ul class="list">
+      <li class="item" *ngFor="let item of avatarList" [style.background]="item" (click)="chooseAvatar(item)"></li>
+    </ul>
   </div>
 </div>

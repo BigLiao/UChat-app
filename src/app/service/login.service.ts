@@ -12,7 +12,11 @@ export class LoginService {
   login() {
     return this.store.login().subscribe(() => {
       this.isLoggedIn = true;
-      this.router.navigateByUrl(this.redirectUrl);
+      if (this.redirectUrl) {
+        this.router.navigateByUrl(this.redirectUrl);
+      } else {
+        this.router.navigateByUrl('/index');
+      }
     });
   }
 

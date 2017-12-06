@@ -22,9 +22,12 @@ export class DialogBoxComponent implements OnInit {
   @Input()
   public recieveMsg: Observable<string>;
 
+  @Input()
+  private user: User;
+
   private me: User;
 
-  constructor(private store: StoreService) { 
+  constructor(private store: StoreService) {
     this.me = this.store.me;
   }
 
@@ -32,10 +35,12 @@ export class DialogBoxComponent implements OnInit {
     this.recieveMsg.subscribe((e) => {
       // this.scrollToBottom()
       setTimeout(() => {
-        this.scrollToBottom()
-      }, 20)
-      console.log('reciveemsg:' + e)
-    })
+        this.scrollToBottom();
+      }, 20);
+      console.log(this.store.msgStore);
+      console.log(this.msgList);
+      console.log('reciveemsg:' + e);
+    });
   }
 
   scrollToBottom() {

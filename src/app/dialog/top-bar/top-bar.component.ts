@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class TopBarComponent implements OnInit {
 
-  private name: string = '李晓明';
+  @Input()
+  private name: string;
 
   @Input()
   backUrl: string;

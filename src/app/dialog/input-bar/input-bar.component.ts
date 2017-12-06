@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-input-bar',
@@ -7,10 +7,13 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class InputBarComponent implements OnInit {
 
-  private inputText: string = '';
+  private inputText = '';
   private inputHeight: number;
-  private focus: boolean = false;
-  private buttonShow: boolean = false;
+  private focus = false;
+  private buttonShow = false;
+
+  @ViewChild('area')
+  private inputEle: ElementRef;
 
   @Output()
   public sendNewMsg: EventEmitter<string> = new EventEmitter()
@@ -39,6 +42,16 @@ export class InputBarComponent implements OnInit {
 
   sendMsg() {
     this.sendNewMsg.emit(this.inputText);
+    this.clearInput();
+    this.setFocus();
+  }
+
+  setFocus() {
+    this.inputEle.nativeElement.focus();
+  }
+
+  clearInput() {
+    this.inputText = '';
   }
 
 }

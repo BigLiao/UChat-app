@@ -1,6 +1,6 @@
 <div class="contacts-item" [routerLink]="'/dialog/'+user.id">
   <div class="content">
-    <div class="avatar">
+    <div class="avatar" [style.background]="user.avatar">
       <img [src]="user.avatar" alt="">
     </div>
     <div class="name">{{user.name}}</div>

@@ -14,7 +14,7 @@ export class ContactsComponent implements OnInit {
     name: '小明',
     id: 'q2w21',
     avatar: ''
-  }
+  };
 
   public onlineUserList: User[];
 
@@ -24,11 +24,14 @@ export class ContactsComponent implements OnInit {
   ngOnInit() {
     console.log('contacts');
     this.onlineUserList = this.store.userList;
-    this.store.userListChange.subscribe(e => {
-      this.onlineUserList = this.store.userList;
-      console.log(this.store.userList);
+    this.store.userListChange.subscribe(userList => {
+      this.onlineUserList = userList;
     });
-    console.log(this.store.userList);
+    console.log(this.onlineUserList);
+  }
+
+  _getUserList() {
+    // this.store.getUserList();
   }
 
 }

@@ -11,9 +11,9 @@ import { User } from '../../service/me.service';
 })
 export class DialogComponent implements OnInit {
 
-  public msgList: Msg[] = [];
+  public msgList: Msg[];
 
-  public msgChange: Observable<string>
+  public msgChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private store: StoreService, private route: ActivatedRoute) { 
   }
@@ -23,13 +23,21 @@ export class DialogComponent implements OnInit {
   contactId: string;
 
   ngOnInit() {
-    this.msgChange = this.store.msgChange;
     this.contactId = this.route.snapshot.paramMap.get('id');
-    this.store.userList.fi
+    this.user = this.store.userList.find((item) => {
+      return item.id === this.contactId;
+    });
+
+    this.msgList = this.store.msgStore[this.contactId];
+    this.store.msgStoreChange.subscribe(msgStore => {
+      this.msgList = msgStore[this.contactId];
+      this.msgChange.emit(true);
+      console.log(msgStore);
+    });
   }
 
   sendMsg(msg: string) {
-    this.store.sendMsg(msg);
+    this.store.sendMsg(msg, this.contactId);
   }
 
 }
