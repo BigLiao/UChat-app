@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MeService, User } from './me.service';
 import { escape, unescape } from 'querystring';
 
-const URL = 'ws://uchat.bigleo.me:8080';
+const URL = 'ws://uchat.bigleo.me:8081';
 
 @Injectable()
 export class StoreService {
@@ -22,6 +22,12 @@ export class StoreService {
   public currentMsgList: EventEmitter<Msg[]> = new EventEmitter();
 
   constructor(private meService: MeService) {
+
+    const localMsg = localStorage.getItem('msgStore');
+    if (localMsg) {
+      this.msgStore = JSON.parse(localMsg);
+    }
+
     this.socket = io(URL);
 
     this.socket.on('init userList', (userList: User[]) => {
@@ -49,6 +55,7 @@ export class StoreService {
         this.msgStore[fromId] = [msgObj];
       }
       this.msgStoreChange.emit(this.msgStore);
+      this.storeMsg();
     });
 
     this.socket.on('disconnect', (reason) => {
@@ -63,7 +70,7 @@ export class StoreService {
           break;
         }
       }
-    })
+    });
 
   }
 
@@ -91,6 +98,10 @@ export class StoreService {
     return this.userList.find(user => {
       return user.id === id;
     });
+  }
+
+  storeMsg() {
+    localStorage.setItem('msgStore', JSON.stringify(this.msgStore));
   }
 }
 

@@ -16,6 +16,7 @@ export class ChatListComponent implements OnInit {
   constructor(private store: StoreService) {
     this.dialogList = this._geneDialogList(this.store.msgStore);
     this.store.msgStoreChange.subscribe(msgStore => {
+      console.log('msgchange');
       this.dialogList = this._geneDialogList(msgStore);
     });
   }
@@ -32,6 +33,9 @@ export class ChatListComponent implements OnInit {
     const list = [];
     for (const key of Object.keys(msgStore)) {
       const user = this.store.getUser(key);
+      if (user === undefined) {
+        break;
+      }
       const msgList = msgStore[key];
       const msgObj = msgList[msgList.length - 1];
       const msg = msgObj.msg;

@@ -31,7 +31,16 @@ export class LoginComponent implements OnInit {
   constructor(private me: MeService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
-    this._randomAvatar();
+    if (this.me.hasMe()) {
+      this.me.getMe();
+      this.name = this.me.me.name;
+      this.avatar = this.me.me.avatar;
+      setTimeout(() => {
+        this.loginService.login();
+      }, 1500);
+    } else {
+      this._randomAvatar();
+    }
   }
 
   _randomAvatar() {
@@ -45,13 +54,6 @@ export class LoginComponent implements OnInit {
       this.info = '请输入2个以上字符';
       return;
     }
-    // if (this.me.hasMe()) {
-    //   this.me.updateMe(this.name, '');
-    //   this.loginService.update();
-    // } else {
-    //   this.me.initMe(this.name, '');
-    //   this.loginService.login();
-    // }
     this.me.initMe(this.name, this.avatar);
     this.loginService.login();
   }

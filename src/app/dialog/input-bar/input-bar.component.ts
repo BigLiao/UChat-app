@@ -12,15 +12,18 @@ export class InputBarComponent implements OnInit {
   private focus = false;
   private buttonShow = false;
 
+  private initHeight: number;
+
   @ViewChild('area')
   private inputEle: ElementRef;
 
   @Output()
-  public sendNewMsg: EventEmitter<string> = new EventEmitter()
+  public sendNewMsg: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+    this.initHeight = this.inputEle.nativeElement.offsetHeight;
   }
 
   ipnut(ele, value) {
@@ -41,8 +44,10 @@ export class InputBarComponent implements OnInit {
   }
 
   sendMsg() {
-    this.sendNewMsg.emit(this.inputText);
-    this.clearInput();
+    if (this.inputText.length !== 0) {
+      this.sendNewMsg.emit(this.inputText);
+      this.clearInput();
+    }
     this.setFocus();
   }
 
@@ -52,6 +57,7 @@ export class InputBarComponent implements OnInit {
 
   clearInput() {
     this.inputText = '';
+    this.inputHeight = this.initHeight;
   }
 
 }

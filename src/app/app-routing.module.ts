@@ -42,8 +42,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'main/index',
+    redirectTo: '/index',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/index'
   }
 ]
 
